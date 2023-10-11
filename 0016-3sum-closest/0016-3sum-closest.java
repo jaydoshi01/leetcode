@@ -12,7 +12,7 @@ class Solution {
             while (j < k) {
                 int sum = nums[i] + nums[j] + nums[k];
 
-                if (Math.abs(target - sum) < Math.abs(target - closestSum)) {
+               if (Math.abs(target - sum) < Math.abs(target - closestSum)){
                     closestSum = sum; // Update closest sum if the current sum is closer to the target
                 }
 
