@@ -1,68 +1,54 @@
 class Solution {
     public int[][] spiralMatrixIII(int rows, int cols, int rStart, int cStart) {
-        int[][] matrix = new int[rows*cols][2];
-        int k = 0;
-        
-        int rEnd = rStart + 1;
-        int cEnd = cStart + 1;
+        int[][] result = new int[rows * cols][2];
+        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}; // Right, Down, Left, Up
 
-        while(true) {
-            // right 
-            for(int i = cStart; i <= cEnd; i++) {
-                if(i < cols && i >= 0 && rStart >= 0) {
-                    matrix[k][0] = rStart;
-                    matrix[k][1] = i;
-                    k++;
+        int index = 0;
+        int steps = 1;
+
+        result[index++] = new int[]{rStart, cStart};
+
+        while (index < rows * cols) {
+            // Go right
+            for (int j = 0; j < steps; j++) {
+                cStart += directions[0][1];
+                if (isValidPosition(rStart, cStart, rows, cols)) {
+                    result[index++] = new int[]{rStart, cStart};
                 }
             }
-            cStart--;
-            cEnd++;
 
-            if(k == matrix.length) {
-                break;
-            }
-
-            // down 
-            for(int i = rStart + 1; i <= rEnd; i++) {
-                if(i < rows && i >= 0 && cEnd - 1 < cols) {
-                    matrix[k][0] = i;
-                    matrix[k][1] = cEnd - 1;
-                    k++;
+            // Go down
+            for (int j = 0; j < steps; j++) {
+                rStart += directions[1][0];
+                if (isValidPosition(rStart, cStart, rows, cols)) {
+                    result[index++] = new int[]{rStart, cStart};
                 }
             }
-            rStart--;
-            rEnd++;
 
-            if(k == matrix.length) {
-                break;
-            }
-
-            // left
-            for(int i = cEnd - 2; i >= cStart; i--) {
-                if(i >= 0 && i < cols && rEnd - 1 < rows) {
-                    matrix[k][0] = rEnd - 1;
-                    matrix[k][1] = i;
-                    k++;
+            // Go left
+            for (int j = 0; j < steps + 1; j++) {
+                cStart += directions[2][1];
+                if (isValidPosition(rStart, cStart, rows, cols)) {
+                    result[index++] = new int[]{rStart, cStart};
                 }
             }
-        
-            if(k == matrix.length) {
-                break;
-            }
 
-            // up
-            for(int i = rEnd - 2; i > rStart; i--) {
-                if(i >= 0 && i < rows && cStart >= 0) {
-                    matrix[k][0] = i;
-                    matrix[k][1] = cStart;
-                    k++;
+            // Go up
+            for (int j = 0; j < steps + 1; j++) {
+                rStart += directions[3][0];
+                if (isValidPosition(rStart, cStart, rows, cols)) {
+                    result[index++] = new int[]{rStart, cStart};
                 }
             }
-        
-            if(k == matrix.length) {
-                break;
-            }
+
+            // Increase steps after completing a round
+            steps += 2;
         }
-        return matrix;
+
+        return result;
+    }
+
+    private boolean isValidPosition(int row, int col, int rows, int cols) {
+        return row >= 0 && row < rows && col >= 0 && col < cols;
     }
 }
