@@ -9,40 +9,26 @@ class Solution {
         result[index++] = new int[]{rStart, cStart};
 
         while (index < rows * cols) {
-            // Go right
-            for (int j = 0; j < steps; j++) {
-                cStart += directions[0][1];
-                if (isValidPosition(rStart, cStart, rows, cols)) {
-                    result[index++] = new int[]{rStart, cStart};
+            for (int i = 0; i < 4; i++) {
+                int[] direction = directions[i];
+
+                for (int j = 0; j < steps; j++) {
+                    rStart += direction[0];
+                    cStart += direction[1];
+
+                    if (isValidPosition(rStart, cStart, rows, cols)) {
+                        result[index++] = new int[]{rStart, cStart};
+                        
+                        if (index == rows * cols) {
+                            return result;
+                        }
+                    }
+                }
+
+                if (i % 2 == 1) {
+                    steps++; // Increase steps after moving in both horizontal and vertical directions
                 }
             }
-
-            // Go down
-            for (int j = 0; j < steps; j++) {
-                rStart += directions[1][0];
-                if (isValidPosition(rStart, cStart, rows, cols)) {
-                    result[index++] = new int[]{rStart, cStart};
-                }
-            }
-
-            // Go left
-            for (int j = 0; j < steps + 1; j++) {
-                cStart += directions[2][1];
-                if (isValidPosition(rStart, cStart, rows, cols)) {
-                    result[index++] = new int[]{rStart, cStart};
-                }
-            }
-
-            // Go up
-            for (int j = 0; j < steps + 1; j++) {
-                rStart += directions[3][0];
-                if (isValidPosition(rStart, cStart, rows, cols)) {
-                    result[index++] = new int[]{rStart, cStart};
-                }
-            }
-
-            // Increase steps after completing a round
-            steps += 2;
         }
 
         return result;
