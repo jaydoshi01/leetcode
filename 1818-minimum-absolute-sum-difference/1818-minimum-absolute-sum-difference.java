@@ -84,7 +84,7 @@ public int minAbsoluteSumDiff(int[] nums1, int[] nums2) {
 }
 
 //Binary search to find ceil and floor of each element of nums2 array
-public int MinimumDiff(int[] nums,int target){
+public int MinimumDiff(int[] nums,int target) {
     int s = 0,e = nums.length - 1,ans = Integer.MAX_VALUE,small = -1,big = -1;
     while(s <= e){
         int m = s + (e - s) / 2;
